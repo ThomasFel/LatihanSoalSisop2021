@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
         x[i] = atoi(argv[1 + i]);
     }
     
-    qsort (x, argc - 1, sizeof(int), compare);
+    qsort(x, argc - 1, sizeof(int), compare);
     
     for (int i = 0; i < argc - 1; i++) {
         sortArg[i] = x[i];
