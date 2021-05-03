@@ -1,0 +1,12 @@
+Hasil Luas
+Luas petal pada baris 6 adalah 0.68
+Luas petal pada baris 11 adalah 0.30
+Luas petal pada baris 15 adalah 0.24
+Luas petal pada baris 16 adalah 0.60
+Luas petal pada baris 17 adalah 0.52
+Luas petal pada baris 19 adalah 0.51
+Luas petal pada baris 21 adalah 0.34
+Luas petal pada baris 32 adalah 0.60
+Luas petal pada baris 34 adalah 0.28
+Luas petal pada baris 37 adalah 0.26
+Jumlah Line 151
