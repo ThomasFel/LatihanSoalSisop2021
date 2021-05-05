@@ -31,7 +31,7 @@ int main() {
   	}
   
 	else {
-   	 // this is parent
+   	// this is parent
 		while ((wait(&status)) > 0);
 		char *argv[] = {"mv", "modul2", buffer, NULL};
 		execv("/bin/mv", argv);
