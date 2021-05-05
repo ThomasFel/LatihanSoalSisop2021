@@ -24,14 +24,14 @@ int main() {
   	}
 
 	if (child_id == 0) {
-    // this is child
+    	// this is child
 
 		char *argv[] = {"cp", "-r", "/home/thomasfelix/Downloads", "/home/thomasfelix/modul2", NULL};
 		execv("/bin/cp", argv);
   	}
   
 	else {
-    // this is parent
+   	 // this is parent
 		while ((wait(&status)) > 0);
 		char *argv[] = {"mv", "modul2", buffer, NULL};
 		execv("/bin/mv", argv);
