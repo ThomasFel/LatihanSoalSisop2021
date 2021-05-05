@@ -9,83 +9,84 @@
 #include <string.h>
 
 int check(char file[]) {
-	FILE * fp;
+     FILE * fp;
   
-	if (fp = fopen (file, "r")) {
-    	fclose(fp);
-    	return 1;
-  	}
+     if (fp = fopen (file, "r")) {
+          fclose(fp);
+    	  return 1;
+     }
 	
-	return 0;
+     return 0;
 }
 
 int main() {
-	pid_t pid, sid;        // Variabel untuk menyimpan PID
+     pid_t pid, sid;        // Variabel untuk menyimpan PID
 
-	pid = fork();     // Menyimpan PID dari Child Process
+     pid = fork();     // Menyimpan PID dari Child Process
 
-  	/* Keluar saat fork gagal
-  	* (nilai variabel pid < 0) */
-  	if (pid < 0) {
-    	exit(EXIT_FAILURE);
-  	}
+     /* Keluar saat fork gagal
+     * (nilai variabel pid < 0) */
+     if (pid < 0) {
+          exit(EXIT_FAILURE);
+     }
 
-  	/* Keluar saat fork berhasil
-  	* (nilai variabel pid adalah PID dari child process) */
-  	if (pid > 0) {
-    	exit(EXIT_SUCCESS);
-  	}
+     /* Keluar saat fork berhasil
+     * (nilai variabel pid adalah PID dari child process) */
+     if (pid > 0) {
+          exit(EXIT_SUCCESS);
+     }
 
-  	umask(0);
+     umask(0);
 
-  	sid = setsid();
-  	
-	if (sid < 0) {
-    	exit(EXIT_FAILURE);
-  	}
+     sid = setsid();
 
-  	if ((chdir("/home/thomasfelix/Documents/Modul2")) < 0) {
-    	exit(EXIT_FAILURE);
-  	}
+     if (sid < 0) {
+          exit(EXIT_FAILURE);
+     }
 
-  	close(STDIN_FILENO);
-  	close(STDOUT_FILENO);
-  	close(STDERR_FILENO);
-    
-  	while (1) {
-    	int flag;
-    	char isi[100];
-    	FILE * file;
-    
-    	flag = check("error.txt");
-    	
-		if (flag) {
-      		file = fopen("error.txt", "r");
-      		fgets(isi, 100, file);
-      		fclose(file);
-    	}
+     if ((chdir("/home/thomasfelix/Documents/Modul2")) < 0) {
+          exit(EXIT_FAILURE);
+     }
 
-	    int c = 1;
-	    char str[15];
-	    
-		while(1) {
-	    	sprintf(str, "error.log.%d", c);
-	     	
-			if (check(str)) {
-	       		c += 1;
-	     	}
-	     	
-	     	else {
-	     		break;
-			}
-		}
-	    
-		    file = fopen(str, "w");
-		    fputs(isi, file);
-		    fclose(file);  
-		  
-		    file = fopen("error.txt", "w");
-		    fputs("", file); 
-		    sleep(10);
-  	}
+     close(STDIN_FILENO);
+     close(STDOUT_FILENO);
+     close(STDERR_FILENO);
+
+     while (1) {
+          int flag;
+          char isi[100];
+          FILE * file;
+
+          flag = check("error.txt");
+
+          if (flag) {
+	       file = fopen("error.txt", "r");
+	       fgets(isi, 100, file);
+	       fclose(file);
+          }
+
+          int c = 1;
+          char str[15];
+
+          while (1) {
+	       sprintf(str, "error.log.%d", c);
+
+	       if (check(str)) {
+	            c += 1;
+	       }
+
+	       else {
+	            break;
+	       }
+          }
+
+          file = fopen(str, "w");
+          fputs(isi, file);
+          fclose(file);  
+
+          file = fopen("error.txt", "w");
+          fputs("", file); 
+
+          sleep(10);
+     }
 }
