@@ -42,7 +42,7 @@ static int xmp_getattr(const char *path, struct stat *stbuf) {
     res = lstat(fpath, stbuf);
 
     if (res == -1) {
-		  return -errno;
+	return -errno;
     }
 
     return 0;
@@ -56,7 +56,7 @@ static int xmp_access(const char *path, int mask) {
     res = access(fpath, mask);
 
     if (res == -1) {
-		  return -errno;
+	return -errno;
     }
 
     return 0;
@@ -70,7 +70,7 @@ static int xmp_readlink(const char *path, char *buf, size_t size) {
     res = readlink(fpath, buf, size - 1);
 
     if (res == -1) {
-		  return -errno;
+	return -errno;
     }
 
     buf[res] = '\0';
@@ -101,25 +101,26 @@ static int xmp_readdir(const char *path, void *buf, fuse_fill_dir_t filler, off_
     dp = opendir(path);
 	
     if (dp == NULL) {
-		return -errno;
+	return -errno;
     }
 
     while ((de = readdir(dp)) != NULL) {
-      struct stat st;
+        struct stat st;
       
-      memset(&st, 0, sizeof(st));
+        memset(&st, 0, sizeof(st));
         
-      st.st_ino = de->d_ino;
-      st.st_mode = de->d_type << 12;
+        st.st_ino = de->d_ino;
+        st.st_mode = de->d_type << 12;
           
-      res = (filler(buf, de->d_name, &st, 0));
+        res = (filler(buf, de->d_name, &st, 0));
 
-      if (res != 0) {
-        break;
-      }
+        if (res != 0) {
+            break;
+        }
     }
 
     closedir(dp);
+	
     return 0;
 }
 
@@ -134,7 +135,7 @@ static int xmp_mkdir(const char *path, mode_t mode) {
     fileLog("MKDIR", 1, desc);
 
     if (res == -1) {
-		  return -errno;
+	return -errno;
     }
 
     return 0;
@@ -165,7 +166,7 @@ static int xmp_rmdir(const char *path) {
     fileLog("RMDIR", 1, desc);
 
     if (res == -1) {
-	    return -errno;
+	return -errno;
     }
 
     return 0;
@@ -184,7 +185,7 @@ static int xmp_rename(const char *from, const char *to) {
     fileLog("RENAME", 2, desc);
 
     if (res == -1) {
-		return -errno;
+	return -errno;
     }
 
     return 0;
@@ -201,7 +202,7 @@ static int xmp_create(const char *path, mode_t mode, struct fuse_file_info *fi) 
     fileLog("CREAT", 1, desc);
 
     if (res == -1) {
-		return -errno;
+	return -errno;
     }
 
     fi->fh = res;
@@ -220,7 +221,7 @@ static int xmp_open(const char *path, struct fuse_file_info *fi) {
     fileLog("OPEN", 1, desc);
 
     if (res == -1) {
-	    return -errno;
+	return -errno;
     }
 
     fi->fh = res;
@@ -247,16 +248,16 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset, stru
     fd = open(fpath, O_RDONLY);
 	
     if (fd == -1) {
-		  return -errno;
+	return -errno;
     }
 
     res = pread(fd, buf, size, offset);
 
     if (res == -1) {
-		res = -errno;
+	res = -errno;
     }
 
-	close(fd);
+    close(fd);
 
     return res;
 }
@@ -270,15 +271,15 @@ static int xmp_write(const char *path, const char *buf, size_t size, off_t offse
     sprintf(fpath, "%s%s", dirpath, path);
     
     if (fi == NULL) {
-  		fd = open(fpath, O_WRONLY);
+  	fd = open(fpath, O_WRONLY);
     }
 	
     else {
-  		fd = fi->fh;
+  	fd = fi->fh;
     }
 
     if (fd == -1) {
-	  	return -errno;
+	return -errno;
     }
 
     res = pwrite(fd, buf, size, offset);
@@ -305,21 +306,22 @@ static int xmp_release(const char *path, struct fuse_file_info *fi) {
 
 static const struct fuse_operations _oper = {
     .getattr	= xmp_getattr,
-    .access		= xmp_access,
+    .access	= xmp_access,
     .readlink	= xmp_readlink,
     .readdir	= xmp_readdir,
-    .mkdir		= xmp_mkdir,
-    .unlink		= xmp_unlink,
-    .rmdir		= xmp_rmdir,
-    .rename		= xmp_rename,
-    .open		= xmp_open,
+    .mkdir	= xmp_mkdir,
+    .unlink	= xmp_unlink,
+    .rmdir	= xmp_rmdir,
+    .rename	= xmp_rename,
+    .open	= xmp_open,
     .create 	= xmp_create,
-    .read		= xmp_read,
-    .write		= xmp_write,
+    .read	= xmp_read,
+    .write	= xmp_write,
     .release	= xmp_release,
 };
 
 int main(int argc, char *argv[]) {
     umask(0);
+	
     return fuse_main(argc, argv, &_oper, NULL);
 }
