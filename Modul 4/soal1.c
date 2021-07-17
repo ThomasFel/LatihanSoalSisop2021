@@ -153,6 +153,5 @@ static struct fuse_operations xmp_oper = {
 int main(int argc, char *argv[]) {
     umask(0);
 
-    printf("Readdir: tes/n/n");
     return fuse_main(argc, argv, &xmp_oper, NULL);
 }
