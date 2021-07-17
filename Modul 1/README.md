@@ -5,7 +5,7 @@ Mengambil dari tautan berikut: [MODUL 1](https://github.com/arsitektur-jaringan-
 ## SOAL 1 ##
 
 Buatlah sebuah program <b>bash script</b> yang dapat mengolah bilangan-bilangan yang diinputkan sebagai argumen! Bila jumlah argumen yang diinputkan ganjil, tampilkan jumlah bilangan-bilangan tersebut. Bila genap, tampilkan "Anda belum beruntung, coba lagi." Contoh:
-```
+```bash
 $ bash script.sh 4 1 1
 Output: 6
 
